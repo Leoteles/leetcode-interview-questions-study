@@ -69,4 +69,36 @@ class Solution:
         return s
         
             
-            
+#12:21
+#The algorithm for myAtoi(string s) is as follows:
+
+#Whitespace: Ignore any leading whitespace (" ").
+#Signedness: Determine the sign by checking if the next character is '-' or '+', assuming positivity if neither present.
+#Conversion: Read the integer by skipping leading zeros until a non-digit character is encountered or the end of the string is reached. If no digits were read, then the result is 0.
+#Rounding: If the integer is out of the 32-bit signed integer range [-231, 231 - 1], then round the integer to remain in the range. Specifically, integers less than -231 should be rounded to -231, and integers greater than 231 - 1 should be rounded to 231 - 1.
+
+class Solution:
+    def myAtoi(self, s: str) -> int:
+        s = s.lstrip()
+        if not len(s):
+            return 0
+        neg = False
+        if s[0] in '+-':
+            if s[0] == '-':
+                neg = True
+            s = s[1:]
+        end = len(s)
+        for i in range(len(s)):
+            if s[i] not in '1234567890':
+                end = i
+                break
+        s = s[:end]
+        if not len(s):
+            return 0
+        s = int(s) if not neg else -int(s)
+        if not neg and s > (2**31)-1:
+            s = (2**31)-1
+        if neg and s < -2**31:
+            s = -(2**31)
+        
+        return s
